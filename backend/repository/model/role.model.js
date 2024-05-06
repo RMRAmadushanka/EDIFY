@@ -5,8 +5,7 @@
 import mongoose from "mongoose";
 //
 import { DATA_STATUS_TYPES, ROLE_TYPES } from "../config/constants.js";
-import paginate from "./plugins/paginate.plugin.js";
-import toJSON from "./plugins/toJSON.plugin.js";
+
 
 const roleSchema = mongoose.Schema(
   {

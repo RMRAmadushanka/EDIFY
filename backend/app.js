@@ -1,7 +1,14 @@
 /**
  * node express app
  */
+import dotenv from "dotenv";
+dotenv.config();
 import  express from 'express';
+import  session from 'express-session';
+import { initKeycloak } from './config/keyclock-config.js';
+//
+const memoryStore = new session.MemoryStore();
+const keycloak = initKeycloak(memoryStore);
 //
 import  xss from 'xss-clean';
 import  mongoSanitize from 'express-mongo-sanitize';
@@ -25,5 +32,15 @@ app.use(compression());
 // enable cors
 app.use(cors());
 app.options('*', cors());
+//
+// keycloak
+app.use(session({
+    secret: 'ECC3A9BWRwADB11B11Gl8yhirbXIRDXY',
+    resave: false,
+    saveUninitialized: true,
+    store: memoryStore
+}));
+app.set('trust proxy', false);
+app.use(keycloak.middleware());
 //
 export default app;
