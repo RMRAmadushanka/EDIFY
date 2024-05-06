@@ -12,13 +12,11 @@ export const initializeConnections = async () => {
 };
 /**
  *
- * @returns Initialize the DB instance and repository factory
+ * Initialize the DB instance and repository factory
  */
 const initializeDbConnection = async () => {
   return new Promise(async (resolve, reject) => {
     try {
-
-      //
       setTimeout(async () => {
         connect();
         await initializedDB();

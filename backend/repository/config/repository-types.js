@@ -1,8 +1,5 @@
 /**
  * Enumerated repository types
- * @type {{ROLE: string}}
- * @type {{TOKEN: string}}
- * @type {{USER: string}}
  */
 const REPOSITORY_TYPES = Object.freeze({
     ROLE: 'ROLE',
