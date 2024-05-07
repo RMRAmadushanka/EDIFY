@@ -4,6 +4,27 @@
 import httpStatus from "http-status";
 import ApiError from "../utils/api-error.js";
 import { getKeycloakAdmin } from "../config/keyclock-config.js";
+
+/**
+ * Login user true keycloak
+ */
+export const logIn = async (username, password) => {
+  console.log("Keycloak service");
+  try {
+      const { data } = await keycloakHttpClient.login(username, password);
+      return data;
+  } catch (error) {
+      const { response } = error;
+      if (response) {
+          console.log("Keycloak service error");
+          console.log(response);
+          throw new ApiError(httpStatus.UNAUTHORIZED, 'Credential invalid');
+      }
+      throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Something went wrong');
+  }
+}
+
+
 /**
  * Create user on keycloak
  */
