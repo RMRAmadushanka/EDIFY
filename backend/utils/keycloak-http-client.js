@@ -6,7 +6,6 @@ import axios from 'axios';
  * authenticate with keycloak as a realm user
  */
 export const login = async (username, password) => {
-    console.log("Keycloak http client");
     let url = `${process.env.KEYCLOAK_URL}/realms/${process.env.REALM_NAME}/protocol/openid-connect/token`
     const params = new URLSearchParams();
 

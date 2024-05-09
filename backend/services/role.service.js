@@ -56,8 +56,7 @@ export const getRoleByName = async (name) => {
  * @returns {Promise <Role>}
  **/
 export const getRoleById = async (roleId) => {
-  const roleRepository = getRepositoryFactor().get(REPOSITORY_TYPES.ROLE);
-  const role = await roleRepository.findOne({
+  const role = await RoleRepository.findOne({
     _id: roleId,
     dataStatus: DATA_STATUS_TYPES.ACTIVE,
   });

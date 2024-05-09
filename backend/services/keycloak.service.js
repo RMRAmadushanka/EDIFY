@@ -4,7 +4,7 @@
 import httpStatus from "http-status";
 import ApiError from "../utils/api-error.js";
 import { getKeycloakAdmin } from "../config/keyclock-config.js";
-
+import * as keycloakHttpClient  from '../utils/keycloak-http-client.js'
 /**
  * Login user true keycloak
  */
