@@ -8,5 +8,6 @@ export default function(keycloak) {
 const router = Router();
 
 router.post('/login',  authController.login)
+router.post('/logout', keycloak.protect() , authController.logout);
 return router;
 }

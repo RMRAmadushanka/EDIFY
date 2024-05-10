@@ -27,3 +27,9 @@ export const login = async (username, password) => {
     };
   }
 };
+/**
+ * User logout
+ */
+export const logout = async (refreshToken) => {
+  return await keycloakService.logOut(refreshToken);
+};

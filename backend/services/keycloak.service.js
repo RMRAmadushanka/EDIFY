@@ -23,7 +23,21 @@ export const logIn = async (username, password) => {
       throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Something went wrong');
   }
 }
-
+/**
+ * User logout true keycloak
+ */
+export const logOut = async (refreshToken) => {
+  try {
+      await keycloakHttpClient.logOut(refreshToken);
+  } catch (error) {
+      const { response } = error;
+      if (response) {
+          console.log(response);
+          throw new ApiError(httpStatus.NOT_FOUND, 'Invalid refresh token');
+      }
+      throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Something went wrong');
+  }
+}
 
 /**
  * Create user on keycloak

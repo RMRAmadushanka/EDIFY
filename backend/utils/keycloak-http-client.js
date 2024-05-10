@@ -21,4 +21,19 @@ export const login = async (username, password) => {
         }
     });
 }
+/**
+ * Log out from keycloak
+ */
+export const logOut = async (refreshToken) => {
+    let url = `${config.keyClock.url}/realms/${config.keyClock.realm}/protocol/openid-connect/logout`
+    const params = new URLSearchParams();
 
+    params.append('client_id', config.keyClock.clientId);
+    params.append('client_secret', config.keyClock.clientSecret);
+    params.append('refresh_token', refreshToken);
+    return axios.post(url, params, {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    });
+}
