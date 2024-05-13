@@ -19,3 +19,10 @@ export const logout = catchAsync(async (req, res) => {
     const userLogout = await authService.logout(req.body.refreshToken);
     res.status(httpStatus.NO_CONTENT).send(userLogout);
 });
+/**
+ * access token refresh application programming interface
+ **/
+export const refreshTokens = catchAsync(async (req, res) => {
+    const newRefreshToken = await authService.refreshAuth(req.body.payload);
+    res.status(httpStatus.CREATED).send(newRefreshToken);
+});

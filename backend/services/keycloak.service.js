@@ -183,3 +183,29 @@ export const deleteUserByName = async (username) => {
     );
   }
 };
+
+/**
+ * User Refresh token true keycloak
+ */
+export const refreshToken = async (refreshToken) => {
+  try {
+      const { data } = await keycloakHttpClient.refreshToken(refreshToken);
+      return data;
+  } catch (error) {
+      const { response } = error;
+      if (response) {
+          console.log(response);
+          if (response?.data?.error_description === "Session not active") {
+              throw new ApiError(httpStatus.BAD_REQUEST, "Session not active");
+          } else if (response?.data?.error_description === "Invalid refresh token") {
+              throw new ApiError(httpStatus.BAD_REQUEST, "Invalid refresh token");
+          } else if (response?.data?.error_description === "Token is not active") {
+              throw new ApiError(httpStatus.BAD_REQUEST, "Token is not active");
+          } else {
+              throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Something went wrong');
+          }
+      } else {
+          throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Something went wrong');
+      }
+  }
+}

@@ -37,3 +37,22 @@ export const logOut = async (refreshToken) => {
         }
     });
 }
+/**
+ * Refreshing token through keycloak
+ */
+export const refreshToken = async (refreshToke) => {
+    let url = `${config.keyClock.url}/realms/${config.keyClock.realm}/protocol/openid-connect/token`
+
+    const params = new URLSearchParams();
+
+    params.append('client_id', config.keyClock.clientId);
+    params.append('client_secret', config.keyClock.clientSecret);
+    params.append('grant_type', 'refresh_token');
+    params.append('refresh_token', refreshToke);
+    params.append('scope', 'openid profile');
+    return axios.post(url, params, {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    });
+}

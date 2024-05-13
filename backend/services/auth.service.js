@@ -33,3 +33,18 @@ export const login = async (username, password) => {
 export const logout = async (refreshToken) => {
   return await keycloakService.logOut(refreshToken);
 };
+/**
+ * Refresh the access token
+ */
+export const refreshAuth = async (refreshToken) => {
+  const tokens = await keycloakService.refreshToken(refreshToken);
+  return {
+      tokens: {
+          accessToken: tokens.access_token,
+          expiresIn: tokens.expires_in,
+          refreshToken: tokens.refresh_token,
+          idToken: tokens.id_token,
+          refreshExpiresIn: tokens?.refresh_expires_in,
+      }
+  }
+};

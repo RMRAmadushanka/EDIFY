@@ -9,5 +9,6 @@ const router = Router();
 
 router.post('/login',  authController.login)
 router.post('/logout', keycloak.protect() , authController.logout);
+router.post('/refresh-tokens',  authController.refreshTokens);
 return router;
 }
