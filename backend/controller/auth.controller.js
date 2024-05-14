@@ -26,3 +26,10 @@ export const refreshTokens = catchAsync(async (req, res) => {
     const newRefreshToken = await authService.refreshAuth(req.body.payload);
     res.status(httpStatus.CREATED).send(newRefreshToken);
 });
+/**
+ * forgot password flow application programming interface
+ **/
+export const forgotPassword = catchAsync(async (req, res) => {
+    const forgotPassword = await authService.forgotPassword(req.body.email);
+    res.status(httpStatus.CREATED).send(forgotPassword);
+});

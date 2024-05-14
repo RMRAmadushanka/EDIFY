@@ -87,3 +87,12 @@ export const assignRolesToUser = async (userId, { roles }) => {
   await keycloakService.assignRolesToUser(user.username, newRoles);
   await UserRepository.update(user);
 };
+/**
+ * Get user by email
+ **/
+export const getUserByEmail = async (email) => {
+  return UserRepository.findOne({
+    email,
+    dataStatus: DATA_STATUS_TYPES.ACTIVE,
+  });
+};

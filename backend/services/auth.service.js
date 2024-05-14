@@ -5,7 +5,8 @@ import * as keycloakService from "./keycloak.service.js";
 import * as userService from "./user.service.js";
 import httpStatus from "http-status";
 import ApiError from "../utils/api-error.js";
-
+import * as sendGirdEmailService from './send-grid-email-service.js'
+import * as tokenService from './token.service.js'
 /**
  * Login with username and password
  */
@@ -46,5 +47,23 @@ export const refreshAuth = async (refreshToken) => {
           idToken: tokens.id_token,
           refreshExpiresIn: tokens?.refresh_expires_in,
       }
+  }
+};
+
+/**
+ * Forgot password
+ */
+export const forgotPassword = async (email) => {
+
+  const user = await userService.getUserByEmail(email);
+  console.log(user);
+  if (!user) {
+      logger.info('not found for forgot password action ' + email);
+      console.log("Error");
+      return { message: 'forgot password email has sent' };
+  } else {
+      const token = await tokenService.generateForgotPasswordToken(user);
+      const username = user?.firstName || user.username;
+      return sendGirdEmailService.sendResetPasswordEmail(email, username, token);
   }
 };
