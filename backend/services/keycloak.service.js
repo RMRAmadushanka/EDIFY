@@ -209,3 +209,28 @@ export const refreshToken = async (refreshToken) => {
       }
   }
 }
+
+
+/**
+ * Reset user password on keycloak
+ */
+export const resetPassword = async (username, password) => {
+  try {
+      const client = await getKeycloakAdmin();
+      const user = await findUserByUsername(username);
+      return await client.users.resetPassword({
+          id: user.id,
+          credential: {
+              temporary: false,
+              type: 'password',
+              value: password,
+          },
+      });
+  } catch (error) {
+      const { response } = error;
+      if (response) {
+          console.log(response);
+      }
+      throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Something went wrong');
+  }
+}

@@ -33,3 +33,12 @@ export const forgotPassword = catchAsync(async (req, res) => {
     const forgotPassword = await authService.forgotPassword(req.body.email);
     res.status(httpStatus.CREATED).send(forgotPassword);
 });
+/**
+ * reset user password application programming interface
+ **/
+export const resetPassword = catchAsync(async (req, res) => {
+    const {token, newPassword} = req.body;
+    await authService.resetPassword(token, newPassword);
+
+    res.status(httpStatus.NO_CONTENT).send();
+});

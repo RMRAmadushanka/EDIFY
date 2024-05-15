@@ -67,3 +67,15 @@ export const forgotPassword = async (email) => {
       return sendGirdEmailService.sendResetPasswordEmail(email, username, token);
   }
 };
+
+/**
+ * Reset user password
+ */
+export const resetPassword = async (incomingToken, newPassword) => {
+  const { payload, token } = await tokenService.verifyToken(incomingToken);
+  if (payload.type !== TOKEN_TYPES.RESET_PASSWORD) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid token');
+  }
+  await keycloakService.resetPassword(payload.sub, newPassword);
+  return await tokenService.updateTokenStatus(token, TOKEN_STATUS.USED);
+};
