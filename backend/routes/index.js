@@ -12,6 +12,10 @@ export default function initializeRoutes(keycloak) {
       path: "/auth",
       route: authRoute(keycloak),
     },
+    {
+      path: "/product",
+      route: authRoute(keycloak),
+    },
   ];
   Routes.forEach((route) => {
     router.use(route.path, route.route);
