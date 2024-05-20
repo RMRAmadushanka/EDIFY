@@ -16,6 +16,8 @@ export default function (keycloak) {
     fileUpload("file"),
     productController.uploadProductImg
   );
+  router.delete("/delete-product-img/:objectId/img/:name", productController.deleteProductImg);
+
   //
   return router;
 }
