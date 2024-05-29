@@ -1,0 +1,68 @@
+// For the moment here there is no any scss related file. But this is the feature if new one 
+// getting into the project for getting and idea
+.form{
+    width: 100%;
+}
+.login-txt-bg{
+    height: 39px;
+    text-align: left;
+    color: #0F072C;
+    font-size:100;
+    font-weight: 'bold';
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    margin: auto;
+    background-color: red;
+}
+.google-login-btn{
+    margin-top: 10px;
+}
+.form-field-txt{
+    height: 20px;
+    text-align: left;
+    color: #CFCDD5;
+    font-size:16px;
+    margin-bottom: 4px !important;
+    margin-top: 10px !important;
+}
+.Forgot-password-txt{
+    font-size: 16px;
+    text-align: right;
+    color: #6F6A80 !important;
+    margin-top: 0 !important;
+    text-decoration: underline;
+}
+.form-field{
+    margin-bottom:2px !important;
+    background-color: red;
+}
+.is-divider {
+    margin-top: 20px !important;
+    padding-bottom: 20px !important;
+    height: 2px;
+    border-top: 2px solid rgba(116, 114, 114, 0.07);
+    text-align: center;
+    position: relative;
+    
+}
+.inText {
+    padding: 5px;
+    position: relative;
+    top: -0.9em;
+    font-weight: bold;
+    display: inline-block;
+    color: #cfcdd5;
+}
+.sign-btn-field{
+    align-items:"center";
+    justify-content:"center";
+    margin:"auto";
+    margin-top:10px !important;
+}
+.sign-btn-grid{
+    display:"flex";
+    flex-direction:"row";
+    justify-content:"space-between";
+    align-items:"center";
+}
