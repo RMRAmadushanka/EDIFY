@@ -17,9 +17,18 @@ const categorySchema = new mongoose.Schema(
       enum: ['Active', 'Inactive'],
       default: 'Active',
     },
-    logo: {
-      type: String,  // Assuming you'll store the URL of the uploaded logo
-    },
+    logo:    [
+      {
+      name: {
+        type: String,
+        required: true,
+      },
+      url: {
+        type: String,
+        required: true,
+      },
+    }
+    ],
     subcategories: [
       {
         type: mongoose.Schema.Types.ObjectId,
