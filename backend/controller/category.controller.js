@@ -1,5 +1,5 @@
-import { catchAsync } from '../utils/catch-async.js';
-import * as categoryService from '../services/category.service.js';
+import { catchAsync } from "../utils/catch-async.js";
+import * as categoryService from "../services/category.service.js";
 
 export const addCategory = catchAsync(async (req, res) => {
   const result = await categoryService.addCategory(req.body);
