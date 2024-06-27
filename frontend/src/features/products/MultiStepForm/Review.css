@@ -1,0 +1,9 @@
+.image-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  
+  .image-gallery .col-span-3 {
+    grid-column: span 3 / span 3;
+  }
