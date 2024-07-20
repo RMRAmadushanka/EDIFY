@@ -27,8 +27,10 @@ function* uploadCategoryLogoGenerator({ payload }) {
 
 export function* categorySaga() {
   yield takeLatest(categoryAction.addCategory.type, addCategoryGenerator);
-  yield takeLatest(categoryAction.uploadCategoryLogo.type, uploadCategoryLogoGenerator);
+  yield takeLatest(
+    categoryAction.uploadCategoryLogo.type,
+    uploadCategoryLogoGenerator
+  );
 }
-
 
 export default categorySaga;
