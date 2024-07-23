@@ -98,12 +98,10 @@ const CategoryManagement = () => {
   const [currentCategory, setCurrentCategory] = useState(null);
   const [currentSubcategory, setCurrentSubcategory] = useState(null);
   const [fileList, setFileList] = useState([]);
-  const [newCategory, setNewCategory] = useState(null);
   const [formValues, setFormValues] = useState(null);
   const [tempSubcategories, setTempSubcategories] = useState([]);
   const dispatch = useDispatch();
   const uploadedLogo = useSelector(selectUploadedLogo);
-  const createdCategory = useSelector(selectCategories);
   const logoUploadCompleted = useSelector(selectUploadStatus);
 
   const showModal = () => {
