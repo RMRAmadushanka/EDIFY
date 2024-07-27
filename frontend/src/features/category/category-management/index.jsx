@@ -1,33 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-  Table,
-  Button,
-  Switch,
-  Tag,
-  Space,
-  Modal,
-  Input,
-  Checkbox,
-  Form as AntForm,
-  Card,
-  Upload,
-  message,
-} from "antd";
-import {
-  PlusOutlined,
-  UploadOutlined,
-  EditOutlined,
-  DeleteOutlined,
-} from "@ant-design/icons";
+import { Table, Button, Switch, Tag, Space, Modal, Input, Checkbox, Form as AntForm, Card, Upload, message } from "antd";
+import { PlusOutlined, UploadOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { categoryAction } from "../../slice";
-import {
-  selectCategories,
-  selectUploadStatus,
-  selectUploadedLogo,
-} from "../../selectors";
+import { selectCategories, selectUploadStatus, selectUploadedLogo } from "../../selectors";
 
 const initialCategories = [
   {
