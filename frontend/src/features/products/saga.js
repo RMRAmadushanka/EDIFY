@@ -21,10 +21,15 @@ export function* addProductGenerator({ payload }) {
  * @param {Object} payload
  */
 function* uploadImgGenerator({ payload }) {
-  console.log("payload",payload);
+  console.log("payload", payload);
   try {
-    const response = yield call(request, API.POST_UPLOAD_PRODUCT_IMG, payload, true);
-    console.log("response",response);
+    const response = yield call(
+      request,
+      API.POST_UPLOAD_PRODUCT_IMG,
+      payload,
+      true
+    );
+    console.log("response", response);
     yield put(productActions.uploadImgSucceeded(response));
   } catch (error) {
     yield put(productActions.uploadImgFailed(error?.message));
@@ -35,7 +40,11 @@ function* uploadImgGenerator({ payload }) {
  */
 export function* deleteProductImgGenerator({ payload }) {
   try {
-    const response = yield call(request, API.DELETE_UPLOAD_PRODUCT_IMG, payload);
+    const response = yield call(
+      request,
+      API.DELETE_UPLOAD_PRODUCT_IMG,
+      payload
+    );
     yield put(productActions.deleteImgSucceeded(response));
   } catch (error) {
     yield put(productActions.deleteImgFailed(error?.message));
