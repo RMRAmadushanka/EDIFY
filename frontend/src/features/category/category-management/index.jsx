@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Table, Button, Switch, Tag, Space, Modal, Input, Checkbox, Form as AntForm, Card, Upload, message } from 'antd';
 import { PlusOutlined, UploadOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { categoryAction } from '../../slice';
-import { selectCategories, selectPagination, selectUploadStatus, selectUploadedLogo } from '../../selectors';
+import { selectCategories, selectPagination, selectTotalCategories, selectUploadStatus, selectUploadedLogo } from '../../selectors';
+import { debounce } from 'lodash';
 
-
+const { Search } = Input;
 
 const CategorySchema = Yup.object({
   name: Yup.string().required('Category Name is required'),
@@ -26,22 +27,62 @@ const CategoryManagement = () => {
   const [fileList, setFileList] = useState([]);
   const [formValues, setFormValues] = useState(null);
   const [tempSubcategories, setTempSubcategories] = useState([]);
-  const [addingSubcategory, setAddingSubcategory] = useState(false); // New state for tracking subcategory addition within category modal
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+
   const dispatch = useDispatch();
   const uploadedLogo = useSelector(selectUploadedLogo);
   const createdCategory = useSelector(selectCategories);
   const logoUploadCompleted = useSelector(selectUploadStatus);
   const categories = useSelector(selectCategories);
-  const pagination = useSelector(selectPagination);
-  console.log("selectedCategoryId",selectedCategoryId);
+  const totalCategories = useSelector(selectTotalCategories);
+
+
+
+
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    total: totalCategories,
+  });
+
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const fetchProducts = useCallback(
+    debounce((current, pageSize, search) => {
+      let formattedParamString = `page=${current}&limit=${pageSize}`;
+      if (search) {
+        formattedParamString += `&search=${search}`;
+      }
+      dispatch(categoryAction.fetchCategories({ query: formattedParamString }));
+    }, 300), // Adjust the debounce delay as needed
+    [dispatch]
+  );
+
   useEffect(() => {
-    dispatch(categoryAction.fetchCategories({query: `page=${pagination.page}&limit=${pagination.limit }`}));
-  }, [dispatch, pagination.page, pagination.limit]);
+    fetchProducts(pagination.current, pagination.pageSize, searchTerm);
+  }, [fetchProducts, pagination.current, pagination.pageSize, searchTerm]);
 
-  const handleTableChange = (paginationNew) => {
+  useEffect(() => {
+    setPagination((prevPagination) => ({
+      ...prevPagination,
+      total: totalCategories,
+    }));
+  }, [totalCategories]);
 
-    dispatch(categoryAction.fetchCategories({query: `page=${paginationNew.current}&limit=${pagination.limit }`}));
+  const handleTableChange = (pagination) => {
+    setPagination({
+      current: pagination.current,
+      pageSize: pagination.pageSize,
+      total: pagination.total,
+    });
+  };
+
+  const handleSearch = (value) => {
+    setSearchTerm(value);
+    setPagination((prevPagination) => ({
+      ...prevPagination,
+      current: 1,
+    }));
   };
   const showModal = () => {
     setIsModalVisible(true);
@@ -93,7 +134,7 @@ const CategoryManagement = () => {
     if (currentSubcategory) {
       setTempSubcategories(tempSubcategories.map(sub => sub.key === currentSubcategory.key ? { ...values, key: currentSubcategory.key } : sub));
     } else if (selectedCategoryId){
-      dispatch(categoryAction.addSubCategory(selectedCategoryId, ...values));
+      dispatch(categoryAction.addSubCategory({categoryId:selectedCategoryId, ...values}));
     }
      else {
       setTempSubcategories([...tempSubcategories, { ...values, key: Date.now().toString() }]);
@@ -190,7 +231,14 @@ const CategoryManagement = () => {
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-semibold">Categories</h1>
         <Button type="primary" icon={<PlusOutlined />} onClick={showModal}>New Category</Button>
+
       </div>
+      <Search
+        placeholder="Search by name"
+        onChange={(e) => handleSearch(e.target.value)}
+        value={searchTerm}
+        style={{ marginBottom: 16 }}
+      />
       <Table
         columns={columns}
         dataSource={categories}
