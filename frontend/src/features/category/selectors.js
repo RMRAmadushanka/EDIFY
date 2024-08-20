@@ -1,12 +1,12 @@
-import { createSelector } from '@reduxjs/toolkit';
+import { createSelector } from "@reduxjs/toolkit";
 //
-import { initialState } from './slice';
+import { initialState } from "./slice";
 /**
  * Function to select the slice domain
  * @param {Object} state
  * @returns {Object}
  */
-const selectDomain = (state) => state['feature/category'] || initialState;
+const selectDomain = (state) => state["feature/category"] || initialState;
 /**
  * Function to retrieve select logo state
  */
@@ -19,14 +19,13 @@ export const selectUploadedLogo = createSelector(
  * Function to retrieve select logo state
  */
 export const selectCategories = createSelector(
-    [selectDomain],
-    (categoryState) => categoryState.categories
-  );
-  /**
+  [selectDomain],
+  (categoryState) => categoryState.categories
+);
+/**
  * Function to retrieve select logo state
  */
 export const selectUploadStatus = createSelector(
-    [selectDomain],
-    (categoryState) => categoryState.logoUploadCompleted
-  );
-  
+  [selectDomain],
+  (categoryState) => categoryState.logoUploadCompleted
+);
