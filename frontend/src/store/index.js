@@ -9,8 +9,11 @@ import rootSaga from '../root-saga';
 //
 import { ENVIRONMENT } from '../config';
 import logger from '../features/base/utils/logger';
+import { signInSlice } from '../features/sign-in/slice';
 import { authSlice } from '../features/base/auth/slice';
-
+import { productSlice } from '../features/products/slice';
+import { notificationSlice } from '../features/base/notifications/slice';
+import { categorySlice } from '../features/category/slice';
 
 
 const sagaMiddleware = createSagaMiddleware();
@@ -42,6 +45,10 @@ const persistConfig = {
  */
 const reducers = combineReducers({
   'feature/base-auth': authSlice.reducer,
+  'feature/sign-in': signInSlice.reducer,
+  'feature/product': productSlice.reducer,
+  'feature/notification': notificationSlice.reducer,
+  'feature/category': categorySlice.reducer,
 });
 /**
  * Define what are the slice which needs to be persist
