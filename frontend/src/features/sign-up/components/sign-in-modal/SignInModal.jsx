@@ -35,10 +35,9 @@ const SignInModal = ({ closeModal }) => {
       .min(2, "Password must be at least 8 characters")
       .required("Password is required"),
     ...(isSignUp && {
-
       email: Yup.string()
-      .email("Invalid email address")
-      .required("Email is required"),
+        .email("Invalid email address")
+        .required("Email is required"),
       phoneNumber: Yup.string().required("Phone number is required"),
     }),
   });
@@ -52,17 +51,16 @@ const SignInModal = ({ closeModal }) => {
     }),
   };
 
-  const handleSubmit = (values, { setSubmitting,resetForm  }) => {
+  const handleSubmit = (values, { setSubmitting, resetForm }) => {
     if (isSignUp) {
       dispatch(signInActions.signUp(values));
-      resetForm()
+      resetForm();
     } else {
       dispatch(signInActions.signIn(values));
-      resetForm()
+      resetForm();
     }
     setSubmitting(false);
   };
-
 
   useEffect(() => {
     if (isAuthenticated(refreshToken)) {
